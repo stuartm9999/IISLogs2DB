@@ -62,4 +62,14 @@
   <ItemGroup>
     <Folder Include="Properties" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="IISLog.sql" />
+    <Build Include="IISLogFile.sql" />
+    <Build Include="TVPIISLog.sql" />
+    <Build Include="usp_IISLogInsert.sql" />
+    <Build Include="AddIISLogRole.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="IISLogsDB.refactorlog" />
+  </ItemGroup>
 </Project>
