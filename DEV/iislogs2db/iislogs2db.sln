@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "IISLogsDB", "IISLogsDB\IISLogsDB.sqlproj", "{7E207417-B96C-4145-85E5-E6BA5099BF40}"
+EndProject
+Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "IISLogsPowerShell", "IISLogsPowerShell\IISLogsPowerShell.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs41
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = IISLogsDB\\IISLogsDB.sqlproj
+		SccProjectName1 = IISLogsDB
+		SccLocalPath1 = IISLogsDB
+		SccProjectUniqueName2 = IISLogsPowerShell\\IISLogsPowerShell.pssproj
+		SccProjectName2 = IISLogsPowerShell
+		SccLocalPath2 = IISLogsPowerShell
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E207417-B96C-4145-85E5-E6BA5099BF40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E207417-B96C-4145-85E5-E6BA5099BF40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E207417-B96C-4145-85E5-E6BA5099BF40}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{7E207417-B96C-4145-85E5-E6BA5099BF40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E207417-B96C-4145-85E5-E6BA5099BF40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E207417-B96C-4145-85E5-E6BA5099BF40}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
