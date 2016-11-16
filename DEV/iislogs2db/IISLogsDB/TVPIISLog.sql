@@ -2,19 +2,30 @@
 
 CREATE TYPE [dbo].[TVPIISLog] AS TABLE
 (
-	[IISLogFileId] INT 
+	[IISLogFileId] INT NOT NULL 
 	,[RowNumber] [int] NULL
+	,[date] [varchar](10)
+	,[time] [varchar](10)
 	,[datetime] datetime2(0)
-	,[sIp] [varchar](255) NULL
-	,[csMethod] [varchar](255) NULL
-	,[csUriStem] [varchar](255) NULL
-	,[csUriQuery] [varchar](255) NULL
-	,[sPort] [int] NULL
-	,[csUsername] [varchar](255) NULL
-	,[cIp] [varchar](255) NULL
+	,[cip] [varchar](255) NULL
+	,[csusername] [varchar](255) NULL
+	,[ssitename] [varchar](255) NULL
+	,[scomputername] [varchar](255) NULL
+	,[sip] [varchar](255) NULL
+	,[sport] [varchar](255) NULL
+	,[csmethod] [varchar](255) NULL
+	,[csuristem] [varchar](255) NULL
+	,[csuriquery] [varchar](255) NULL
+	,[scstatus] [int] NULL
+	,[scsubstatus] [int] NULL
+	,[scbytes] [int] NULL
+	,[scwin32status] [int] NULL
+	,[timetaken] [int] NULL
+	,[csversion] [varchar](255) NULL
+	,[cshost] [varchar](255) NULL
 	,[csUserAgent] [varchar](255) NULL
-	,[scStatus] [int] NULL
-	,[scSubstatus] [int] NULL
-	,[scWin32Status] [int] NULL
-	,[timeTaken] [int] NULL
+	,[csCookie] [varchar](255) NULL
+	,[csReferrer] [varchar](255) NULL
+	,[sc-substatus] [varchar](255) NULL
+	
 )

@@ -1,25 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "IISLogsDB", "IISLogsDB\IISLogsDB.sqlproj", "{7E207417-B96C-4145-85E5-E6BA5099BF40}"
 EndProject
 Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "IISLogsPowerShell", "IISLogsPowerShell\IISLogsPowerShell.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7E207417-B96C-4145-85E5-E6BA5099BF40} = {7E207417-B96C-4145-85E5-E6BA5099BF40}
+	EndProjectSection
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs41
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = IISLogsDB\\IISLogsDB.sqlproj
-		SccProjectName1 = IISLogsDB
-		SccLocalPath1 = IISLogsDB
-		SccProjectUniqueName2 = IISLogsPowerShell\\IISLogsPowerShell.pssproj
-		SccProjectName2 = IISLogsPowerShell
-		SccLocalPath2 = IISLogsPowerShell
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -38,5 +29,17 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs41
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = IISLogsDB\\IISLogsDB.sqlproj
+		SccProjectName1 = IISLogsDB
+		SccLocalPath1 = IISLogsDB
+		SccProjectUniqueName2 = IISLogsPowerShell\\IISLogsPowerShell.pssproj
+		SccProjectName2 = IISLogsPowerShell
+		SccLocalPath2 = IISLogsPowerShell
 	EndGlobalSection
 EndGlobal

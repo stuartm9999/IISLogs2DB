@@ -68,6 +68,8 @@
     <Build Include="TVPIISLog.sql" />
     <Build Include="usp_IISLogInsert.sql" />
     <Build Include="AddIISLogRole.sql" />
+    <Build Include="IDX_IISLOGFILE_NAME_MACHINENAME.sql" />
+    <Build Include="usp_IISLogFileInsert_1.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="IISLogsDB.refactorlog" />

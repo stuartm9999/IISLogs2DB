@@ -1,0 +1,3 @@
+﻿CREATE UNIQUE INDEX [IDX_IISLOGFILE_NAME_MACHINENAME]
+	ON [dbo].[IISLogFile]
+	([LogFileName],[MachineName])
