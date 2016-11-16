@@ -30,13 +30,44 @@ function Main() {
        }
 }
 
-       # the log table
-       
+<#
+Create a row for the Log File on the IISLogFile table.
+We use a constraint on the database to stop us parsing the same file on the same 
+computer twice leading to duplicate rows.
+In the event of an error then you need to delete all the log entries then the file then
+parse again.
+#>
+function CreateLogFileID([String]$fileName, [String]$computerName){
+	[Nullable[int]] $IISFileNameID = $null
+	$conn = new-object System.Data.SqlClient.SqlConnection $connString
+	try {
+		$conn.Open()
+		[System.Data.SQLClient.SQLCommand]$Command =  $Command = New-Object System.Data.SQLClient.SQLCommand
+		[String]$sproc = "[dbo].[usp_IISLogFileInsert]"
+		$Command.Connection = $conn
+		$command.CommandType = [System.Data.CommandType]::StoredProcedure
+		$Command.CommandText = $sproc
+		$Command.Parameters.Add("@LogFilename",[System.Data.SqlDbType]::NVarChar).Value = $fileName
+		$Command.Parameters.Add("@MachineName",[System.Data.SqlDbType]::NVarChar).Value = $computerName
+		$ret = $Command.ExecuteScalar()
+		if($ret -ne [System.DBNull]::Value){
+				$IISFileNameID = $ret
+		}
+	}
+	finally{
+              $conn.Close()
+    }
+	return $IISFileNameID
+}
 
 
+<#
+This function calls the stored procedure with the data table passed through.
+TODO - consider passing the connection too as probably more efficient.
+#>
 function saveLog([System.Data.DataTable]$IISLog) {
 #Connection and Query Info
-$query='usp_insertList' 
+$query='[dbo].[usp_IISLogInsert]' 
  
 
 #Connect
@@ -52,12 +83,8 @@ $cmd.CommandType = [System.Data.CommandType]"StoredProcedure"
 $cmd.CommandText= $query
 $null = $cmd.Parameters.Add("@TVP", [System.Data.SqlDbType]::Structured)
 $cmd.Parameters["@TVP"].Value = $IISLog
-
-#Create and fill dataset
-$ds=New-Object system.Data.DataSet
-$da=New-Object system.Data.SqlClient.SqlDataAdapter($cmd)
-$null = $da.fill($ds)
-              }
+$cmd.ExecuteNonQuery()
+}
        finally{
               $conn.Close()
        }
@@ -65,8 +92,39 @@ $null = $da.fill($ds)
        
 }
 
+# The columns in the TVP
+$TVPColumns = @(
+"IISLogFileId"  
+	,"RowNumber" 
+	,"date"
+	,"time"
+	,"datetime"
+	,"cip" 
+	,"csusername" 
+	,"ssitename" 
+	,"scomputername" 
+	,"sip" 
+	,"sport" 
+	,"csmethod" 
+	,"csuristem"
+	,"csuriquery"
+	,"scstatus" 
+	,"scsubstatus" 
+	,"scbytes" 
+	,"scwin32status" 
+	,"timetaken" 
+	,"csversion" 
+	,"cshost" 
+	,"csUserAgent" 
+	,"csCookie" 
+	,"csReferrer" 
+	,"sc-substatus" 
+	)
+
 function ParseFile([string]$File) {
        echo processing $File
+	# create the logfile entry in the database.
+	[Nullable[int]]$LogFileId = CreateLogFileId($File, $env:computername)
        $IISLog = New-Object System.Data.DataTable "IISLog"    
        # Get-Content gets the file, pipe to Where-Object and skip the first 3 lines.
        $reader = [System.IO.File]::OpenText($File)
@@ -77,7 +135,7 @@ try {
               $line = $reader.ReadLine()
         $line = $reader.ReadLine()
         
-              # the columns
+              # the columns in the file
               $line = $reader.ReadLine()
               $line
               # Replace unwanted text in the line containing the columns.
@@ -87,8 +145,9 @@ try {
               # Count available Columns, used later
               $Count = $Columns.Length
        
-              # Loop through each Column, create a new column through Data.DataColumn and add it to the DataTable
-              foreach ($Column in $Columns) {
+              # Loop through each TVPColumn, 
+			#create a new column through Data.DataColumn and add it to the DataTable
+              foreach ($Column in $TVPColumns) {
                      $NewColumn = New-Object System.Data.DataColumn $Column, ([string])
                      $IISLog.Columns.Add($NewColumn)
               }
@@ -100,10 +159,21 @@ try {
               $x++
               $Row = $line.TrimEnd().Split(" ")
               $AddRow = $IISLog.newrow()
+			  #put in the id and the row number
+			  $AddRow."IISLogFileId" = $LogFileId
+			  $AddRow."RowNumber" = $x
+			  [String]$dtime # the date time 
               for($i=0;$i -lt $Count; $i++) {
                      $ColumnName = $Columns[$i]
                      $AddRow.$ColumnName = $Row[$i]
+				  if("date" -eq $ColumnName){
+					  $dtime = $Row[$i] + " "
+				  }
+				  if("time" -eq $ColumnName){
+					  $dtime += $Row[$i]
+				  }
               }
+			  $AddRow."datetime" = $dtime
               $IISLog.Rows.Add($AddRow)
               if(0 -eq $x % 1000) {
                      
@@ -124,8 +194,6 @@ finally {
        
 }
        
-
-
 
 Main
 
