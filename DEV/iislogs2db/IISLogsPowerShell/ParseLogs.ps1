@@ -117,46 +117,56 @@ $TVPColumns = @(
 	,"cshost" 
 	,"csUserAgent" 
 	,"csCookie" 
-	,"csReferrer" 
+	,"csReferer" 
 	,"sc-substatus" 
 	)
-
-function ParseFile([string]$File) {
-       echo processing $File
-	# create the logfile entry in the database.
-	[Nullable[int]]$LogFileId = CreateLogFileId($File, $env:computername)
-       $IISLog = New-Object System.Data.DataTable "IISLog"    
-       # Get-Content gets the file, pipe to Where-Object and skip the first 3 lines.
-       $reader = [System.IO.File]::OpenText($File)
-try {
-       [int]$x = 0
-       # first three lines are header info and ignored
-        $line = $reader.ReadLine()
+	
+	
+	function ParseHeaders([System.IO.StreamReader]$reader){
+		   # first three lines are header info and ignored
+		# assume we've read one already to find the hash
               $line = $reader.ReadLine()
         $line = $reader.ReadLine()
         
               # the columns in the file
               $line = $reader.ReadLine()
-              $line
               # Replace unwanted text in the line containing the columns.
               $Columns = (($line.TrimEnd()) -replace "#Fields: ", "" -replace "-","" -replace "\(","" -replace "\)","").Split(" ")
-              $Columns
+              return $Columns
               
-              # Count available Columns, used later
-              $Count = $Columns.Length
-       
-              # Loop through each TVPColumn, 
+             
+    
+	}
+	
+function ParseFile([string]$File) {
+       echo processing $File
+	# create the logfile entry in the database.
+	[Nullable[int]]$LogFileId = CreateLogFileId($File, $env:computername)
+
+       $IISLog = New-Object System.Data.DataTable "IISLog"    
+		# Loop through each TVPColumn, 
 			#create a new column through Data.DataColumn and add it to the DataTable
               foreach ($Column in $TVPColumns) {
                      $NewColumn = New-Object System.Data.DataColumn $Column, ([string])
                      $IISLog.Columns.Add($NewColumn)
               }
               
-              # now the rest of the file
-              while($null -ne ($line = $reader.ReadLine())) {
+	      # Open file.
+       [System.IO.StreamReader]$reader = [System.IO.File]::OpenText($File)
+try {
+       [int]$x = 0
+	          [String[]]$Columns
+			 [int]$Count
+
+              while($null -ne ([String]$line = $reader.ReadLine()) -and '' -ne $line.Trim()) {
+			  if($line.StartsWith('#')) {
+				  #read the header lines
+				  $Columns = ParseHeaders($reader)
+				  $Count = $Columns.Length    
+				  $line = $reader.ReadLine()
+				  $x+=4
+			  }
               
-        
-              $x++
               $Row = $line.TrimEnd().Split(" ")
               $AddRow = $IISLog.newrow()
 			  #put in the id and the row number
@@ -178,9 +188,9 @@ try {
               if(0 -eq $x % 1000) {
                      
                      saveLog($IISLog)
-                     echo clearing data table
                      $IISLog.Clear()
               }
+				  $x++
        
     }
        saveLog($IISLog)

@@ -25,7 +25,7 @@ CREATE TYPE [dbo].[TVPIISLog] AS TABLE
 	,[cshost] [varchar](255) NULL
 	,[csUserAgent] [varchar](255) NULL
 	,[csCookie] [varchar](255) NULL
-	,[csReferrer] [varchar](255) NULL
+	,[csReferer] [varchar](255) NULL
 	,[sc-substatus] [varchar](255) NULL
 	
 )
