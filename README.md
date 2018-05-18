@@ -7,7 +7,15 @@ There is an MS tool that does this - [Log Parser](https://www.iis.net/downloads/
 We were looking at a solution that:
 * didn't involve installing something big on the web servers* allowed use of strongly typed stored procedures for data transfer
 * would support multiple servers and large amounts of data
-(We were looking at using this on a client who is pretty security conscious, as am I, and likes to abide with [OWASP Secure Coding Practices](OWASP Secure Coding Practices)(https___www.owasp.org_images_0_08_OWASP_SCP_Quick_Reference_Guide_v2.pdf), and who wouldn't, that states "Use strongly typed parameterized queries " in its database security section.## Done* Schema and stored procedures* Tested with a lot of .log files## TODO* Implement portioning and indexing on the Log table* Describe how to install/create Downloads.* Process to delete old log entries* Modify to only parse old files so wont interfere with files in flight.
+(We were looking at using this on a client who is pretty security conscious, as am I, and likes to abide with [OWASP Secure Coding Practices](OWASP Secure Coding Practices)(https___www.owasp.org_images_0_08_OWASP_SCP_Quick_Reference_Guide_v2.pdf), and who wouldn't, that states "Use strongly typed parameterized queries " in its database security section.
+## Done
+* Schema and stored procedures
+* Tested with a lot of .log files## 
+## TODO
+* Implement portioning and indexing on the Log table
+* Describe how to install/create Downloads.
+* Process to delete old log entries
+* Modify to only parse old files so wont interfere with files in flight.
 
 # User Guide
 As it stands - the project is currently a VS2015 solution with two projects - A database project and a PowerShell project.
